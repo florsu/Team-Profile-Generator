@@ -15,7 +15,7 @@ const teamMembers = [];
 
 function start() {
     createManager()
-    createTeam()
+
 }
 
 function createTeam() {
@@ -29,9 +29,11 @@ function createManager() {
             name: "managerName",
             message: "What is manager's name?",
         },
-    ]).then(answers => {
+    ]).then((answers) => {
+        console.log(answers)
         const manager = new Manager(answers.managerName)
         teamMembers.push(manager)
+        createTeam()
     })
 }
 start()
