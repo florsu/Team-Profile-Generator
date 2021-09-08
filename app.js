@@ -31,7 +31,7 @@ function createManager() {
         },
     ]).then((answers) => {
         console.log(answers)
-        const manager = new Manager(answers.managerName)
+        const manager = new Manager(answers.managerID, answers.managerName, answers.managerEmail, answers.managerOfficeNumber)
         teamMembers.push(manager)
         createTeam()
     })
