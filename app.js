@@ -10,6 +10,53 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 //const { start } = require("repl");
+const managerPrompt = [
+    {
+        type: "input",
+        name: "managerName",
+        message: "What is manager's name?",
+    },
+    {
+        type: "input",
+        name: "managerID",
+        message: "What is manager's ID?",
+    },
+    {
+        type: "input",
+        name: "managerEmail",
+        message: "What is manager's email?",
+    },
+    {
+        type: "input",
+        name: "managerOfficeNumber",
+        message: "What is manager's office number?",
+    },
+]
+
+const teamMenuPrompt = [
+    {
+        name: "addMember",
+        message: "Select team member to add.",
+        type: "list",
+        choices: [
+            "Engineer",
+            "Intern",
+            "FINISH",
+        ],
+    },
+]
+
+function createMenuPrompt() {
+   inquirer.prompt(teamMenuPrompt).then((answers) => {
+       console.log(answers)
+       if (answers.addMember=="FINISH") {
+           createTeam()
+       } else {
+           createMenuPrompt()
+
+       }
+   })
+}
 
 const teamMembers = [];
 
@@ -23,17 +70,11 @@ function createTeam() {
 }
 
 function createManager() {
-    inquirer.prompt([
-        {
-            type: "input",
-            name: "managerName",
-            message: "What is manager's name?",
-        },
-    ]).then((answers) => {
+    inquirer.prompt(managerPrompt).then((answers) => {
         console.log(answers)
         const manager = new Manager(answers.managerID, answers.managerName, answers.managerEmail, answers.managerOfficeNumber)
         teamMembers.push(manager)
-        createTeam()
+        createMenuPrompt()
     })
 }
 start()
