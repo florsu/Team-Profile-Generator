@@ -10,6 +10,17 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 //const { start } = require("repl");
+const teamMenuPrompt = {
+    name: "addMember",
+    message: "Select team member to add.",
+    type: "list",
+    choices: [
+        "Engineer",
+        "Intern",
+        "FINISH",
+    ],
+}
+
 const managerPrompt = [
     {
         type: "input",
@@ -31,38 +42,52 @@ const managerPrompt = [
         name: "managerOfficeNumber",
         message: "What is manager's office number?",
     },
+    teamMenuPrompt,
 ]
 
-const teamMenuPrompt = [
+const engineerPrompt = [
     {
-        name: "addMember",
-        message: "Select team member to add.",
-        type: "list",
-        choices: [
-            "Engineer",
-            "Intern",
-            "FINISH",
-        ],
+        type: "input",
+        name: "engineerName",
+        message: "What is engineer's name?",
     },
+    {
+        type: "input",
+        name: "engineerID",
+        message: "What is engineer's ID?",
+    },
+    {
+        type: "input",
+        name: "engineerEmail",
+        message: "What is engineer's email?",
+    },
+    {
+        type: "input",
+        name: "engineerGithubUsername",
+        message: "What is engineer's Github username",
+    },
+    teamMenuPrompt,
 ]
 
-function createMenuPrompt() {
-   inquirer.prompt(teamMenuPrompt).then((answers) => {
-       console.log(answers)
-       if (answers.addMember=="FINISH") {
-           createTeam()
-       } else {
-           createMenuPrompt()
+function createMenuPrompt(addMember) {
+    console.log(addMember)
+    if (addMember == "FINISH") {
+        createTeam()
+    } else {
+        if (addMember == "Engineer") {
+            createEngineer()
+        } else if (addMember == "Intern") {
 
-       }
-   })
+        } else {
+            console.log(`TODO ${addMember} `)
+        }
+    }
 }
 
 const teamMembers = [];
 
 function start() {
     createManager()
-
 }
 
 function createTeam() {
@@ -74,10 +99,21 @@ function createManager() {
         console.log(answers)
         const manager = new Manager(answers.managerID, answers.managerName, answers.managerEmail, answers.managerOfficeNumber)
         teamMembers.push(manager)
-        createMenuPrompt()
+        createMenuPrompt(answers.addMember)
     })
 }
 start()
+
+function createEngineer() {
+    inquirer.prompt(engineerPrompt).then((answers) => {
+        console.log(answers)
+        const engineer = new Engineer(answers.engineerID, answers.engineerName, answers.engineerEmail, answers.engineerGithubUsername)
+        teamMembers.push(engineer)
+        createMenuPrompt(answers.addMember)
+    })
+}
+
+
 //type list of options to call for team members
 
 
