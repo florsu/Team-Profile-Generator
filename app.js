@@ -64,7 +64,31 @@ const engineerPrompt = [
     {
         type: "input",
         name: "engineerGithubUsername",
-        message: "What is engineer's Github username",
+        message: "What is engineer's Github username?",
+    },
+    teamMenuPrompt,
+]
+
+const internPrompt = [
+    {
+        type: "input",
+        name: "internName",
+        message: "What is intern's name?",
+    },
+    {
+        type: "input",
+        name: "internID",
+        message: "What is intern's ID?",
+    },
+    {
+        type: "input",
+        name: "internEmail",
+        message: "What is intern's email?",
+    },
+    {
+        type: "input",
+        name: "internSchool",
+        message: "What is intern's school?",
     },
     teamMenuPrompt,
 ]
@@ -77,7 +101,7 @@ function createMenuPrompt(addMember) {
         if (addMember == "Engineer") {
             createEngineer()
         } else if (addMember == "Intern") {
-
+            createIntern()
         } else {
             console.log(`TODO ${addMember} `)
         }
@@ -109,6 +133,15 @@ function createEngineer() {
         console.log(answers)
         const engineer = new Engineer(answers.engineerID, answers.engineerName, answers.engineerEmail, answers.engineerGithubUsername)
         teamMembers.push(engineer)
+        createMenuPrompt(answers.addMember)
+    })
+}
+
+function createIntern() {
+    inquirer.prompt(internPrompt).then((answers) => {
+        console.log(answers)
+        const intern = new Intern(answers.internID, answers.internName, answers.internEmail, answers.internSchool)
+        teamMembers.push(intern)
         createMenuPrompt(answers.addMember)
     })
 }
