@@ -122,7 +122,7 @@ function createTeam() {
 function createManager() {
     inquirer.prompt(managerPrompt).then((answers) => {
         console.log(answers);
-        const manager = new Manager(answers.managerID, answers.managerName, answers.managerEmail, answers.managerOfficeNumber);
+        const manager = new Manager(answers.managerName, answers.managerID, answers.managerEmail, answers.managerOfficeNumber);
         teamMembers.push(manager);
         createMenuPrompt(answers.addMember);
     });
@@ -132,7 +132,7 @@ start();
 function createEngineer() {
     inquirer.prompt(engineerPrompt).then((answers) => {
         console.log(answers);
-        const engineer = new Engineer(answers.engineerID, answers.engineerName, answers.engineerEmail, answers.engineerGithubUsername);
+        const engineer = new Engineer(answers.engineerName, answers.engineerID, answers.engineerEmail, answers.engineerGithubUsername);
         teamMembers.push(engineer);
         createMenuPrompt(answers.addMember);
     });
@@ -141,7 +141,7 @@ function createEngineer() {
 function createIntern() {
     inquirer.prompt(internPrompt).then((answers) => {
         console.log(answers);
-        const intern = new Intern(answers.internID, answers.internName, answers.internEmail, answers.internSchool);
+        const intern = new Intern(answers.internName, answers.internID, answers.internEmail, answers.internSchool);
         teamMembers.push(intern);
         createMenuPrompt(answers.addMember);
     });
